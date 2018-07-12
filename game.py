@@ -43,16 +43,13 @@ class Screen:
     playername = None
     enemyname = None
     content = "Test Text"
-
-    def setUIParams(self, playerobject, enemyobject):
+    def draw(self,playerobject,enemyobject):
         self.playername = playerobject.getname()
         self.playerhp = playerobject.gethealth()
         self.playermp = playerobject.getmagic()
         self.enemyname = enemyobject.getname()
         self.enemyhp = enemyobject.gethealth()
         self.enemymp = enemyobject.gethealth()
-
-    def draw(self):
         if os.name == 'nt':
             os.system("""cls""")
         else:
@@ -108,11 +105,10 @@ def main():
     b = Character("Police", 50, 50, 5)
     sc = Screen()
     sc.resetcontent("Welcome to Text RPG!!")
-    sc.draw()
+    sc.draw(a,b)
     input()
-    sc.setUIParams(a, b)
     sc.resetcontent("Press any key to start game.")
-    sc.draw()
+    sc.draw(a,b)
     input()
     event = a.attack(b)
     sc.resetcontent("a used ATTACK on b!!")
@@ -122,8 +118,7 @@ def main():
         sc.appendline("Partially Blocked!!")
     else:
         sc.appendline("Fully Blocked!!")
-    sc.setUIParams(a, b)
-    sc.draw()
+    sc.draw(a,b)
     input()
     if os.name == 'nt':
         os.system("""cls""")
