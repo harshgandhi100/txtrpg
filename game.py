@@ -42,7 +42,10 @@ class Screen:
         self.enemyhp = enemyobject.gethealth()
         self.enemymp = enemyobject.gethealth()
     def draw(self):
-        os.system("""clear""")
+        if os.name == 'nt':
+            os.system("""cls""")
+        else:
+            os.system("""clear""")
         for i in range(50):
             print("-",end = "")
         if self.playername != None:
@@ -107,7 +110,10 @@ def main():
     sc.setUIParams(a,b)
     sc.draw()
     input()
-    os.system("""clear""")
+    if os.name == 'nt':
+        os.system("""cls""")
+    else:
+        os.system("""clear""")
 
 
 if __name__ == "__main__":
