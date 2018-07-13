@@ -86,7 +86,7 @@ class Screen:
             print("-", end="")
         print("\033[5;1H")
         for i in list(self.content):
-            time.sleep(0.063)
+            time.sleep(0.030)
             print(i, end="", flush=True)
         print("")
 
@@ -120,7 +120,7 @@ def main():
         else:
             sc.appendline("Fully Blocked!!")
         sc.draw(a,b)
-        time.sleep(2)
+        time.sleep(1)
         event = b.attack(a)
         sc.resetcontent("b used ATTACK on a!!")
         if event == 1:
@@ -130,7 +130,7 @@ def main():
         else:
             sc.appendline("Fully Blocked!!")
         sc.draw(a,b)
-        time.sleep(2)
+        time.sleep(1)
 
     if a.gethealth() > 0:
         sc.resetcontent(a.getname()+" Won!!!")
