@@ -49,7 +49,7 @@ class Screen:
         self.playermp = playerobject.getmagic()
         self.enemyname = enemyobject.getname()
         self.enemyhp = enemyobject.gethealth()
-        self.enemymp = enemyobject.gethealth()
+        self.enemymp = enemyobject.getmagic()
         if os.name == 'nt':
             os.system("""cls""")
         else:
@@ -110,16 +110,35 @@ def main():
     sc.resetcontent("Press any key to start game.")
     sc.draw(a,b)
     input()
-    event = a.attack(b)
-    sc.resetcontent("a used ATTACK on b!!")
-    if event == 1:
-        sc.appendline("Super Effective!!")
-    elif event == 2:
-        sc.appendline("Partially Blocked!!")
+    while a.gethealth() > 0 and b.gethealth() > 0:
+        event = a.attack(b)
+        sc.resetcontent("a used ATTACK on b!!")
+        if event == 1:
+            sc.appendline("Super Effective!!")
+        elif event == 2:
+            sc.appendline("Partially Blocked!!")
+        else:
+            sc.appendline("Fully Blocked!!")
+        sc.draw(a,b)
+        time.sleep(2)
+        event = b.attack(a)
+        sc.resetcontent("b used ATTACK on a!!")
+        if event == 1:
+            sc.appendline("Super Effective!!")
+        elif event == 2:
+            sc.appendline("Partially Blocked!!")
+        else:
+            sc.appendline("Fully Blocked!!")
+        sc.draw(a,b)
+        time.sleep(2)
+
+    if a.gethealth() > 0:
+        sc.resetcontent(a.getname()+" Won!!!")
     else:
-        sc.appendline("Fully Blocked!!")
+        sc.resetcontent(b.getname()+" Won!!!")
     sc.draw(a,b)
     input()
+
     if os.name == 'nt':
         os.system("""cls""")
     else:
