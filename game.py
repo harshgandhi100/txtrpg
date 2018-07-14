@@ -17,7 +17,7 @@ def main():
     input()
     while a.gethealth() > 0 and b.gethealth() > 0:
         event = a.attack(b)
-        sc.resetcontent("a used ATTACK on b!!")
+        sc.resetcontent("%s used ATTACK on %s!!" % (a.getname(), b.getname()))
         if event == 1:
             sc.appendline("Super Effective!!")
         elif event == 2:
@@ -27,7 +27,7 @@ def main():
         sc.draw(a,b)
         time.sleep(1)
         event = b.attack(a)
-        sc.resetcontent("b used ATTACK on a!!")
+        sc.resetcontent("%s used ATTACK on %s!!" % (b.getname(), a.getname()))
         if event == 1:
             sc.appendline("Super Effective!!")
         elif event == 2:
