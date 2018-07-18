@@ -1,4 +1,6 @@
 import random
+from math import ceil
+
 
 class Character:
     health = 100
@@ -32,3 +34,53 @@ class Character:
         elif fate == 2:
             self.health = self.health - (damagepoints/2)
         return fate
+
+
+class BaseCharacter:
+
+    def __init__(self, hp, mp, p_attack, p_defence, m_attack, m_defence):
+        self.hp = hp
+        self.mp = mp
+        self.p_attack = p_attack
+        self.p_defence = p_defence
+        self.m_attack = m_attack
+        self.m_defence = m_defence
+
+    def light_attack(self, target):
+        fail_chance = random.random()
+        damage = 0
+        if(fail_chance>=0.2):
+            percent_damage = random.uniform(0.5, 1.0)
+            # print(percent_damage)
+            damage = ceil((self.p_attack - target.p_defence) * percent_damage)
+            # print('damage:' + str(damage))
+        target.hp = target.hp - damage
+
+    def heavy_attack(self, target):
+        print("heavy attack")
+
+
+class Warrior(BaseCharacter):
+    def __init__(self):
+        super(Warrior, self).__init__(1000, 1000, 100, 100, 100, 100)
+
+
+class Mage(BaseCharacter):
+    def __init__(self):
+        super(Mage, self).__init__(800, 1200, 50, 50, 200, 200)
+
+
+class Goblin(BaseCharacter):
+    def __init__(self):
+        super(Goblin, self).__init__(500, 500, 50, 50, 50, 50)
+
+# def main():
+#     warrior1 = Warrior()
+#     warrior2 = Goblin()
+#     for i in range(5):
+#         warrior1.light_attack(warrior2)
+#         print(warrior2.hp)
+
+
+# if __name__ == "__main__":
+#     main()
