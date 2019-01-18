@@ -14,7 +14,9 @@ red = (200,0,0)
 green = (0,200,0)
 
 bright_red = (255,0,0)
-bright_green = (0,255,0)
+bright_green = (0, 255, 0)
+
+blue_bg = (7,6,196)
 
 block_color = (53,115,255)
 
@@ -25,7 +27,7 @@ clock = pygame.time.Clock()
 pause = False
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, black)
+    textSurface = font.render(text, True, white)
     return textSurface, textSurface.get_rect()
 
 def button(msg,x,y,w,h,ic,ac,action=None):
@@ -86,7 +88,7 @@ def game_intro():
                 pygame.quit()
                 quit()
 
-        gameDisplay.fill(white)
+        gameDisplay.fill(black)
         largeText = pygame.font.SysFont("comicsansms",115)
         TextSurf, TextRect = text_objects("Text RPG", largeText)
         TextRect.center = ((display_width/2),(display_height/2))
@@ -115,8 +117,25 @@ def game_loop():
                 quit()
 
         gameDisplay.fill(black)
+        draw_player_area()
+        draw_enemy_area()
+        draw_log_area()
         pygame.display.update()
         clock.tick(60)
+
+
+def draw_enemy_area():
+    pygame.draw.rect(gameDisplay, bright_red, pygame.Rect(10, 10, 1004, 100), 3)
+
+def draw_player_area():
+    #Background
+    pygame.draw.rect(gameDisplay, blue_bg, pygame.Rect(10, 400, 1004, 166), 0)
+    #Borders
+    pygame.draw.rect(gameDisplay, white, pygame.Rect(10, 400, 502, 166), 3)
+    pygame.draw.rect(gameDisplay, white, pygame.Rect(512, 400, 502, 166), 3)
+
+def draw_log_area():
+    pygame.draw.rect(gameDisplay, white, pygame.Rect(10, 120, 1004, 270), 3)
 
 game_intro()
 game_loop()
