@@ -38,7 +38,8 @@ class Character:
 
 class BaseCharacter:
 
-    def __init__(self, hp, mp, p_attack, p_defence, m_attack, m_defence):
+    def __init__(self, name, hp, mp, p_attack, p_defence, m_attack, m_defence):
+        self.name = name
         self.hp = hp
         self.mp = mp
         self.p_attack = p_attack
@@ -61,24 +62,25 @@ class BaseCharacter:
 
 
 class Warrior(BaseCharacter):
-    def __init__(self):
-        super(Warrior, self).__init__(1000, 1000, 100, 100, 100, 100)
+    def __init__(self, name):
+        super(Warrior, self).__init__(name, 1000, 1000, 100, 100, 100, 100)
 
 
 class Mage(BaseCharacter):
-    def __init__(self):
-        super(Mage, self).__init__(800, 1200, 50, 50, 200, 200)
+    def __init__(self, name):
+        super(Mage, self).__init__(name, 800, 1200, 50, 50, 200, 200)
 
 
 class Goblin(BaseCharacter):
-    def __init__(self):
-        super(Goblin, self).__init__(500, 500, 50, 50, 50, 50)
+    def __init__(self, name):
+        super(Goblin, self).__init__(name, 500, 500, 50, 50, 50, 50)
 
 # def main():
-#     warrior1 = Warrior()
-#     warrior2 = Goblin()
+#     warrior1 = Warrior('Warrior')
+#     warrior2 = Goblin('Goblin')
 #     for i in range(5):
 #         warrior1.light_attack(warrior2)
+#         print(warrior2.name)
 #         print(warrior2.hp)
 
 
