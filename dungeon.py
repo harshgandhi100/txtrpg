@@ -1,35 +1,39 @@
 import random
 import math
 
-class room:
+class Room:
     room_count = 0
     def __init__(self):
-        self.index = room_count
+        self.index = Room.room_count+1
         self.left = None
         self.right = None
         self.front = None
         self.back = None
-        room_count += 1
+        Room.room_count += 1
      
-class dungeon:
-    def __init__(self,n_rooms):
-        self.numberOfRooms = n_rooms
-        for i in range(numberOfRooms)
-            self.rooms[i] = room()
+class Dungeon:
+    current_room = None
+    first_room = None
+    def __init__(self,room_lim = 10):
+        self.first_room = Room()
+        self.room_limit = room_lim
+        self.current_room = self.first_room
 
-    def join_rooms(self):
-        for i in range(1,math.ceil(self.numberOfRooms/2)):
-            self.rooms[i].front = i + 1
-        for i in range(math.ceil(self.numberOfRooms/2)+1,self.numberOfRooms):
-            while (self.chosen_room.left <> None or self.chosen_room.right <> None):
-                self.chosen_room = self.rooms[random.randint(1,math.ceil(self.numberOfRooms/2))]
-                if(self.chosen_room.left = None and self.chosen_room.right <> None):
-                    self.chosen_room.left = self.rooms[i]
-                elif (self.chosen_room.left <> None and self.chosen_room.right = None):
-                    self.chosen_room.right = self.rooms[i]
-                elif (self.chosen_room.left = None and self.chosen_room.right = None):
-                    if(random.randint(0,1) = 0):
-                        self.chosen_room.left = self.rooms[i]
-                    else:
-                        self.chosen_room.right = self.rooms[i]
 
+    def generate_map(self):
+        while (Room.room_count <= self.room_limit):
+            self.current_room.front = Room()
+            self.current_room = self.current_room.front
+        self.current_room = self.first_room
+
+    def next_room(self):
+        self.current_room = self.current_room.front
+
+def main():
+    d = Dungeon()
+    d.generate_map()
+    while(d.current_room.front is not None):
+        print(d.current_room.index)
+        d.next_room()
+if __name__ == "__main__":
+    main()
