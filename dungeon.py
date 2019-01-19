@@ -1,7 +1,7 @@
 import random
 import math
 
-class Node:
+class Adjnode:
     def __init__(self,data):
         self.roomId = data
         self.link = None
@@ -12,4 +12,13 @@ class Dungeon:
         self.layout = [None] * numberOfRooms
 
     def add_doors_between(self,source,destination):
-        
+        connection = Adjnode(destination)
+        connection.link = self.layout[source]
+        self.layout[source] = connection
+
+        connection = Adjnode(source)
+        connection.link = self.layout[destination]
+        self.layout[destination] = connection
+
+    def next_room()
+    
