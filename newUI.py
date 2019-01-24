@@ -1,24 +1,12 @@
 import pygame
 import time
 import random
+from colors import *
 
 pygame.init()
 
 display_width = 1024
 display_height = 576
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-
-red = (200, 0, 0)
-green = (0, 200, 0)
-
-bright_red = (255, 0, 0)
-bright_green = (0, 255, 0)
-
-blue_bg = (7, 6, 196)
-
-block_color = (53, 115, 255)
 
 gameDisplay: pygame.Surface = pygame.display.set_mode(
     (display_width, display_height))
@@ -31,7 +19,9 @@ default_font_color = white
 
 multi_Line_surface: pygame.Surface = pygame.Surface((990, 260))
 logAreaRect = pygame.Rect(10, 120, 1004, 270)
+multi_Line_surface_rect = pygame.Rect(20, 130, 985, 256)
 
+log = [ "Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6", "Line 7", "Line 8", "Line 9", "Line 10", "Line 11", "Line 12", "Line 13", "Line 14", "Line 15", "Line 16", "Line 17", "Line 18", "Line 19", "Line 20", "Line 21", "Line 22", "Line 23", "Line 24", "Line 25", "Line 26", "Line 27", "Line 28", "Line 29", "Line 30" ]
 
 def text_objects(text, font, font_color):
     textSurface = font.render(text, True, font_color)
@@ -74,7 +64,7 @@ def unpause():
 def paused():
 
     largeText = pygame.font.SysFont("comicsansms", 115)
-    TextSurf, TextRect = text_objects("Paused", largeText)
+    TextSurf, TextRect = text_objects("Paused", largeText, default_font_color)
     TextRect.center = ((display_width/2), (display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
 
@@ -127,18 +117,27 @@ def game_loop():
 
     gameExit = False
 
-    gameDisplay.fill(black)
-    draw_player_area()
-    draw_enemy_area()
-    draw_log_area()
-
     while not gameExit:
-
+        gameDisplay.fill(black)
+        draw_player_area()
+        draw_enemy_area()
+        draw_log_area()
         for event in pygame.event.get():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_ESCAPE:
+            #         pause = True
+            #         paused()
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 5:
+                    print("Scrolled down")
+                    multi_Line_surface_rect.top -= 10
+                if event.button == 4:
+                    print("Scrolled up")
+                    multi_Line_surface_rect.top += 10
 
         pygame.display.update()
         clock.tick(60)
@@ -158,14 +157,23 @@ def draw_player_area():
 
 
 def draw_log_area():
+    global multi_Line_surface
     logRect: pygame.Rect = pygame.draw.rect(
         gameDisplay, white, logAreaRect, 3)
     # display_text("Over the break\nNew Line", default_font_color, logRect)
     smallText: pygame.font.Font = pygame.font.SysFont("Consolas", 16)
-    text: str = "Over the break\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN"
+    text: str = ""
+    for i in range(15):
+        if (i == 15):
+            text += log[i]
+        else:
+            text += log[i] + "\n"
+
+    # text: str = "Over the break\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN"
+
     multi_Line_surface = multiLineSurface(
-        text, smallText, pygame.Rect(15, 125, 990, 260), white, black)
-    gameDisplay.blit(multi_Line_surface, pygame.Rect(15, 125, 990, 260))
+        text, smallText, multi_Line_surface_rect, white, blue_bg)
+    gameDisplay.blit(multi_Line_surface, multi_Line_surface_rect)
 
 
 class TextRectException:
