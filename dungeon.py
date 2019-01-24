@@ -22,18 +22,39 @@ class Dungeon:
 
     def generate_map(self):
         while (Room.room_count <= self.room_limit):
-            self.current_room.front = Room()
-            self.current_room = self.current_room.front
+            self.random_integer = random.randint(1,10)
+            if(self.random_integer < 6):
+                self.current_room.front = Room()
+                self.current_room.front.back = self.current_room
+            elif(self.random_integer == 7 or self.random_integer == 8):
+                self.current_room.left = Room()
+                self.current_room.left.back = self.current_room
+            elif(self.random_integer == 9 or self.random_integer == 10):
+                self.current_room.right = Room()
+                self.current_room.right.back = self.current_room 
         self.current_room = self.first_room
+        
 
-    def next_room(self):
-        self.current_room = self.current_room.front
+    def next_room(self,direction):
+        if(direction == 1):
+            self.current_room = self.current_room.front
+        elif(direction == 2):
+            self.current_room = self.current_room.left
+        elif(direction == 3):
+            self.current_room = self.current_room.right
+        elif(direction == 4):
+            self.current_room = self.current_room.back
+        else:
+            self.current_room = self.current_room
 
 def main():
     d = Dungeon()
     d.generate_map()
-    while(d.current_room.front is not None):
+    inp = None
+    while(inp != 0):
         print(d.current_room.index)
-        d.next_room()
+        inp = int(input())
+        d.next_room(inp)
+        
 if __name__ == "__main__":
     main()
