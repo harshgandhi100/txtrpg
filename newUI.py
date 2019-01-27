@@ -176,11 +176,16 @@ def draw_log_area():
     # text: str = "Over the break\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN"
     text = scroll_text(log, scroll_position, max_line_display)
     multi_Line_surface = multiLineSurface(
-        text, smallText, multi_Line_surface_rect, white, blue_bg)
+        text, smallText, multi_Line_surface_rect, white, black)
     gameDisplay.blit(multi_Line_surface, multi_Line_surface_rect)
 
-# def draw_log_scrollbar():
-#     if (len(log) > max_line_display):
+    # Update scroll bar
+    draw_log_scrollbar()
+
+def draw_log_scrollbar():
+    if (len(log) > max_line_display):
+        line_start, line_end = get_scroll_bar_details(log, scroll_position, max_line_display)
+        pygame.draw.line(gameDisplay, white, line_start, line_end, 5)
 
 
 class TextRectException:
