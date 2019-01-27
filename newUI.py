@@ -2,6 +2,7 @@ import pygame
 import time
 import random
 from colors import *
+from scrollLog import *
 
 pygame.init()
 
@@ -21,7 +22,14 @@ multi_Line_surface: pygame.Surface = pygame.Surface((990, 260))
 logAreaRect = pygame.Rect(10, 120, 1004, 270)
 multi_Line_surface_rect = pygame.Rect(20, 130, 985, 256)
 
-log = [ "Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6", "Line 7", "Line 8", "Line 9", "Line 10", "Line 11", "Line 12", "Line 13", "Line 14", "Line 15", "Line 16", "Line 17", "Line 18", "Line 19", "Line 20", "Line 21", "Line 22", "Line 23", "Line 24", "Line 25", "Line 26", "Line 27", "Line 28", "Line 29", "Line 30" ]
+log = ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6", "Line 7", "Line 8", "Line 9", "Line 10", "Line 11", "Line 12", "Line 13", "Line 14", "Line 15",
+       "Line 16", "Line 17", "Line 18", "Line 19", "Line 20", "Line 21", "Line 22", "Line 23", "Line 24", "Line 25", "Line 26", "Line 27", "Line 28", "Line 29", "Line 30"]
+
+
+scroll_position = 0
+max_line_display = 15
+log_display_frame = []
+
 
 def text_objects(text, font, font_color):
     textSurface = font.render(text, True, font_color)
@@ -111,7 +119,7 @@ def game_intro():
 
 def game_loop():
     global pause
-
+    global scroll_position
     x = (display_width * 0.45)
     y = (display_height * 0.8)
 
@@ -134,10 +142,12 @@ def game_loop():
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 5:
                     print("Scrolled down")
-                    multi_Line_surface_rect.top -= 10
+                    if(scroll_position + max_line_display < len(log)):
+                        scroll_position += 1
                 if event.button == 4:
                     print("Scrolled up")
-                    multi_Line_surface_rect.top += 10
+                    if(scroll_position > 0):
+                        scroll_position -= 1
 
         pygame.display.update()
         clock.tick(60)
@@ -162,18 +172,15 @@ def draw_log_area():
         gameDisplay, white, logAreaRect, 3)
     # display_text("Over the break\nNew Line", default_font_color, logRect)
     smallText: pygame.font.Font = pygame.font.SysFont("Consolas", 16)
-    text: str = ""
-    for i in range(15):
-        if (i == 15):
-            text += log[i]
-        else:
-            text += log[i] + "\n"
 
     # text: str = "Over the break\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN\nN"
-
+    text = scroll_text(log, scroll_position, max_line_display)
     multi_Line_surface = multiLineSurface(
         text, smallText, multi_Line_surface_rect, white, blue_bg)
     gameDisplay.blit(multi_Line_surface, multi_Line_surface_rect)
+
+# def draw_log_scrollbar():
+#     if (len(log) > max_line_display):
 
 
 class TextRectException:
