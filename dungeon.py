@@ -32,32 +32,32 @@ class Dungeon:
 
     def generate_map(self):
         """Generates random dungeon maps."""
-        while (self.room_count <= self.room_limit):
+        while (self.room_count < self.room_limit):
             self.room_count += 1
             self.random_integer = random.randint(1, 10)
-            if(self.random_integer < 6):
+            if(self.random_integer <= 6):
                 self.current_room.north = Room(self.room_count)
                 self.current_room.north.south = self.current_room
                 self.current_room = self.current_room.north
             elif(self.random_integer == 7 or self.random_integer == 8):
                 self.current_room.west = Room(self.room_count)
-                self.current_room.west.south = self.current_room
+                self.current_room.west.east = self.current_room
                 self.current_room = self.current_room.west
             elif(self.random_integer == 9 or self.random_integer == 10):
                 self.current_room.east = Room(self.room_count)
-                self.current_room.east.south = self.current_room
+                self.current_room.east.west = self.current_room
                 self.current_room = self.current_room.east
 
         self.current_room = self.first_room
 
     def next_room(self, direction):
-        if(direction == Direction.North and self.current_room.north != None):
+        if(direction == Direction.North.value and self.current_room.north != None):
             self.current_room = self.current_room.north
-        elif(direction == Direction.East and self.current_room.east != None):
+        elif(direction == Direction.East.value and self.current_room.east != None):
             self.current_room = self.current_room.east
-        elif(direction == Direction.South and self.current_room.south != None):
+        elif(direction == Direction.South.value and self.current_room.south != None):
             self.current_room = self.current_room.south
-        elif(direction == Direction.West and self.current_room.west != None):
+        elif(direction == Direction.West.value and self.current_room.west != None):
             self.current_room = self.current_room.west
         else:
             self.current_room = self.current_room
