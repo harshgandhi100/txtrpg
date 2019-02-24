@@ -1,17 +1,22 @@
 import random
 import math
+from enum import Enum
+
+class Direction(Enum):
+    North = 1
+    East = 2
+    South = 3
+    West = 4
 
 
 class Room:
-    room_count = 0
 
-    def __init__(self):
-        self.index = Room.room_count+1
-        self.left = None
-        self.right = None
-        self.front = None
-        self.back = None
-        Room.room_count += 1
+    def __init__(self, index):
+        self.index = index
+        self.west = None
+        self.east = None
+        self.north = None
+        self.south = None
 
 
 class Dungeon:
@@ -20,37 +25,40 @@ class Dungeon:
     first_room = None
 
     def __init__(self, room_lim=10):
-        self.first_room = Room()
+        self.room_count = 0
+        self.first_room = Room(self.room_count)
         self.room_limit = room_lim
         self.current_room = self.first_room
 
     def generate_map(self):
         """Generates random dungeon maps."""
-        while (Room.room_count <= self.room_limit):
+        while (self.room_count <= self.room_limit):
+            self.room_count += 1
             self.random_integer = random.randint(1, 10)
             if(self.random_integer < 6):
-                self.current_room.front = Room()
-                self.current_room.front.back = self.current_room
-                self.current_room = self.current_room.front
+                self.current_room.north = Room(self.room_count)
+                self.current_room.north.south = self.current_room
+                self.current_room = self.current_room.north
             elif(self.random_integer == 7 or self.random_integer == 8):
-                self.current_room.left = Room()
-                self.current_room.left.back = self.current_room
-                self.current_room = self.current_room.left
+                self.current_room.west = Room(self.room_count)
+                self.current_room.west.south = self.current_room
+                self.current_room = self.current_room.west
             elif(self.random_integer == 9 or self.random_integer == 10):
-                self.current_room.right = Room()
-                self.current_room.right.back = self.current_room
-                self.current_room = self.current_room.right
+                self.current_room.east = Room(self.room_count)
+                self.current_room.east.south = self.current_room
+                self.current_room = self.current_room.east
+
         self.current_room = self.first_room
 
     def next_room(self, direction):
-        if(direction == 1 and self.current_room.front != None):
-            self.current_room = self.current_room.front
-        elif(direction == 2 and self.current_room.left != None):
-            self.current_room = self.current_room.left
-        elif(direction == 3 and self.current_room.right != None):
-            self.current_room = self.current_room.right
-        elif(direction == 4 and self.current_room.back != None):
-            self.current_room = self.current_room.back
+        if(direction == Direction.North and self.current_room.north != None):
+            self.current_room = self.current_room.north
+        elif(direction == Direction.East and self.current_room.east != None):
+            self.current_room = self.current_room.east
+        elif(direction == Direction.South and self.current_room.south != None):
+            self.current_room = self.current_room.south
+        elif(direction == Direction.West and self.current_room.west != None):
+            self.current_room = self.current_room.west
         else:
             self.current_room = self.current_room
 

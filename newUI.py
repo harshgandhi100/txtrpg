@@ -28,7 +28,6 @@ log = ["Line 1", "Line 2", "Line 3", "Line 4", "Line 5", "Line 6", "Line 7", "Li
 
 scroll_position = 0
 max_line_display = 15
-log_display_frame = []
 
 
 def text_objects(text, font, font_color):
